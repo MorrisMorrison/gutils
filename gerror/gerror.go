@@ -1,0 +1,7 @@
+package gerror
+
+func HandleError(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
