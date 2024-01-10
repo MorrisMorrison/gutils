@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/gutils/gerror"
+	"github.com/MorrisMorrison/gutils/gerror"
 )
 
 func ReadFile(path string, ignoreWhitespace bool) []string {
