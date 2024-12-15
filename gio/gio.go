@@ -3,7 +3,6 @@ package gio
 import (
 	"bufio"
 	"os"
-	"strconv"
 
 	"github.com/MorrisMorrison/gutils/gerror"
 )
@@ -14,10 +13,9 @@ func ReadFile(path string, ignoreWhitespace bool) []string {
 	scanner := bufio.NewScanner(file)
 	input := make([]string, 0)
 	for scanner.Scan() {
-		inputElement, error := scanner.Text())
+		inputElement := scanner.Text()
 		input = append(input, inputElement)
-		gerror.HandleError(error)
 	}
-	
+
 	return input
 }
