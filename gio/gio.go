@@ -3,19 +3,31 @@ package gio
 import (
 	"bufio"
 	"os"
-
-	"github.com/MorrisMorrison/gutils/gerror"
+	"strings"
 )
 
-func ReadFile(path string, ignoreWhitespace bool) []string {
-	file, error := os.Open(path)
-	gerror.HandleError(error)
+func ReadLinesFromFile(file *os.File, ignoreWhitespace bool) ([]string, error) {
 	scanner := bufio.NewScanner(file)
-	input := make([]string, 0)
+	var lines []string
 	for scanner.Scan() {
-		inputElement := scanner.Text()
-		input = append(input, inputElement)
+		line := scanner.Text()
+		if ignoreWhitespace {
+			line = strings.TrimSpace(line)
+		}
+		lines = append(lines, line)
 	}
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
+	return lines, nil
+}
 
-	return input
+func ReadLinesFromPath(path string, ignoreWhitespace bool) ([]string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	return ReadLinesFromFile(file, ignoreWhitespace)
 }
