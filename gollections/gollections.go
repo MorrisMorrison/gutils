@@ -1,29 +1,29 @@
 package gollections
 
-// 1D Arrays / Slices
-
-func Contains(valuesToCheck []int, comparisonValue int) bool {
-	for _, valueToCheck := range valuesToCheck {
-		if valueToCheck == comparisonValue {
+func Any[T comparable](slice []T, predicate func(T) bool) bool {
+	for _, item := range slice {
+		if predicate(item) {
 			return true
 		}
 	}
 	return false
 }
 
-func All(valuesToCheck []int, matchingElement int) bool {
-	for _, valueToCheck := range valuesToCheck {
-		if valueToCheck != matchingElement {
+func All[T comparable](slice []T, predicate func(T) bool) bool {
+	for _, item := range slice {
+		if !predicate(item) {
 			return false
 		}
 	}
-
 	return true
 }
 
-func Equals(slice1 []int, slice2 []int) bool {
-	for index, item := range slice1 {
-		if item != slice2[index] {
+func Equals[T comparable](slice1 []T, slice2 []T, comparator func(T, T) bool) bool {
+	if len(slice1) != len(slice2) {
+		return false
+	}
+	for i, item := range slice1 {
+		if !comparator(item, slice2[i]) {
 			return false
 		}
 	}
@@ -31,7 +31,6 @@ func Equals(slice1 []int, slice2 []int) bool {
 }
 
 // 2D Arrays / Slices
-
 func GetColumn(matrix [][]int, colNum int) []int {
 	column := make([]int, 0)
 	for i := 0; i < len(matrix); i++ {

@@ -1,6 +1,6 @@
 package gerror
 
-func HandleError(e error) {
+func FailOnError(e error) {
 	if e != nil {
 		panic(e)
 	}
