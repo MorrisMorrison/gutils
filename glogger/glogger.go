@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-var Log *Logger = NewLogger()
+var Log *Logger = NewLogger("gutils")
 
 type LogLevel int
 
@@ -24,12 +24,12 @@ type Logger struct {
 	error   *log.Logger
 }
 
-func NewLogger() *Logger {
+func NewLogger(appName string) *Logger {
 	return &Logger{
-		info:    log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime),
-		debug:   log.New(os.Stdout, "DEBUG: ", log.Ldate|log.Ltime),
-		warning: log.New(os.Stdout, "WARNING: ", log.Ldate|log.Ltime),
-		error:   log.New(os.Stderr, "ERROR: ", log.Ldate|log.Ltime),
+		info:    log.New(os.Stdout, appName + " - INFO: ", log.Ldate|log.Ltime),
+		debug:   log.New(os.Stdout, appName + " - DEBUG: ", log.Ldate|log.Ltime),
+		warning: log.New(os.Stdout, appName + " - WARNING: ", log.Ldate|log.Ltime),
+		error:   log.New(os.Stderr, appName + " - ERROR: ", log.Ldate|log.Ltime),
 	}
 }
 
